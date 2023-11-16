@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Clock - Utah</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="container mx-auto px-4">
+        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+            <h1 class="text-2xl font-bold mb-4">Current Time in Utah (Updates Every Second)</h1>
+            <p id="timeDisplay" class="text-lg text-gray-700">Loading time...</p>
+        </div>
+    </div>
+
+    <script>
+        function fetchTime() {
+            axios.post('https://t5j27vekgeucoeqxxgesrj3u6e0rvgyj.lambda-url.us-east-1.on.aws/')
+                .then(function (response) {
+                    document.getElementById('timeDisplay').textContent = response.data.current_time_in_utah;
+                })
+                .catch(function (error) {
+                    console.error(error);
+                    document.getElementById('timeDisplay').textContent = 'Error: Could not retrieve time';
+                });
+        }
+
+        // Fetch time every second (1000 milliseconds)
+        setInterval(fetchTime, 1000);
+
+        // Also fetch time immediately when the page loads
+        fetchTime();
+    </script>
+
+</body>
+</html>
