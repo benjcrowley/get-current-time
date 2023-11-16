@@ -28,7 +28,11 @@
                 });
         }
 
-        window.onload = fetchTime;
+        // Fetch time every second (1000 milliseconds)
+        setInterval(fetchTime, 1000);
+
+        // Also fetch time immediately when the page loads
+        fetchTime();
     </script>
 
 </body>
